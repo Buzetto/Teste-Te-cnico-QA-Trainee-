@@ -1,6 +1,6 @@
-describe("Funcionalidade: Tela de Login do Portal RDV", () => {
+describe("Funcionalidade: Tela de Login do Portal do teste técnico", () => {
   beforeEach(() => {
-    cy.start();
+    cy.start(Cypress.env("URL"));
   });
 
   it("Cenário 01 - Deve realizar o login com as credenciais vállidas e acessar o portal", () => {
@@ -45,5 +45,27 @@ describe("Funcionalidade: Tela de Login do Portal RDV", () => {
 
     cy.get(".sweet-alert").should("be.visible");
     cy.get(".sweet-alert").contains("Falha no login!");
+  });
+
+  it("Cenário 03 - Tentativa de login com os campos em branco.", () => {
+
+    cy.get('button[type="submit"]').click()
+  
+    cy.get(".sweet-alert").should("be.visible");
+    cy.get(".sweet-alert").contains("Preencha os campos obrigatórios");
+  });
+
+  it("Cenário 04 - Tentiva de redefinição de senha.", () => {
+    cy.redefinirSenha(Cypress.env("User_Company"), Cypress.env("User_Username"))
+  
+    cy.get(".sweet-alert").should("be.visible");
+    cy.get(".sweet-alert").contains("Email enviado");
+  });
+
+  it.only("Cenário 06 - Tentativa de tradução para o idioma desejado", () => {
+    cy.get('span[title="Espanhol"]').click();
+  
+    cy.get('input[placeholder="Contraseña"]').should('be.visible');
+    cy.get('button[type="submit"]').contains('Iniciar sesión');
   });
 });
