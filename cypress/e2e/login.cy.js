@@ -31,7 +31,7 @@ describe("Funcionalidade: Tela de Login do Portal RDV", () => {
     const company = Cypress.env("User_Company");
     const password = Cypress.env("User_Password");
 
-    cy.loginPortalRDV(company, '12345', password);
+    cy.loginPortalRDV(company, "12345", password);
 
     cy.get(".sweet-alert").should("be.visible");
     cy.get(".sweet-alert").contains("Falha no login!");
@@ -41,7 +41,7 @@ describe("Funcionalidade: Tela de Login do Portal RDV", () => {
     const company = Cypress.env("User_Company");
     const username = Cypress.env("User_Username");
 
-    cy.loginPortalRDV(company, username, 'xxxx');
+    cy.loginPortalRDV(company, username, "senha_senha");
 
     cy.get(".sweet-alert").should("be.visible");
     cy.get(".sweet-alert").contains("Falha no login!");
