@@ -1,27 +1,49 @@
-describe('Funcionalidade: Tela de Login do Portal RDV', () => {
+describe("Funcionalidade: Tela de Login do Portal RDV", () => {
+  beforeEach(() => {
+    cy.start();
+  });
 
-  beforeEach (() => {
-    cy.start()
-  })
+  it("Cenário 01 - Deve realizar o login com as credenciais vállidas e acessar o portal", () => {
+    const company = Cypress.env("User_Company");
+    const username = Cypress.env("User_Username");
+    const password = Cypress.env("User_Password");
 
-  it('Cenário 01 - Deve realizar o login com as credenciais vállidas e acessar o portal', () => {
-    const company = Cypress.env('User_Company')
-    const username = Cypress.env('User_Username')
-    const password = Cypress.env('User_Password')
+    cy.loginPortalRDV(company, username, password);
 
-    cy.loginPortalRDV(company, username, password)
+    cy.url().should(
+      "eq",
+      "https://portalrdvqa.azurewebsites.net/#/tenant/dashboard",
+    );
+    cy.get(".page-logo", { timeout: 10000 }).should("be.visible");
+  });
 
-    cy.url().should('eq', 'https://portalrdvqa.azurewebsites.net/#/tenant/dashboard')
-    cy.get('.page-logo', {timeout:10000}).should('be.visible')
-  })
+  it("Cenário 02 - Tentativa de login com uma empresa inválida", () => {
+    const username = Cypress.env("User_Username");
+    const password = Cypress.env("User_Password");
 
-    it.only('Cenário 02 - Tentativa de login com uma empresa inválida', () => {
-    const username = Cypress.env('User_Username')
-    const password = Cypress.env('User_Password')
+    cy.loginPortalRDV("Teste", username, password);
 
-    cy.loginPortalRDV('Teste', username, password)
+    cy.get(".sweet-alert").should("be.visible");
+    cy.get(".sweet-alert").contains("Falha no login!");
+  });
 
-    cy.get('.sweet-alert').should('be.visible')
-    cy.get('.sweet-alert').contains('Falha no login!')
-  })
-})
+  it("Cenário 02.1 - Tentativa de login com um usuário incorreto", () => {
+    const company = Cypress.env("User_Company");
+    const password = Cypress.env("User_Password");
+
+    cy.loginPortalRDV(company, '12345', password);
+
+    cy.get(".sweet-alert").should("be.visible");
+    cy.get(".sweet-alert").contains("Falha no login!");
+  });
+
+  it("Cenário 02.2 - Tentativa de login com uma senha incorreta.", () => {
+    const company = Cypress.env("User_Company");
+    const username = Cypress.env("User_Username");
+
+    cy.loginPortalRDV(company, username, 'xxxx');
+
+    cy.get(".sweet-alert").should("be.visible");
+    cy.get(".sweet-alert").contains("Falha no login!");
+  });
+});
