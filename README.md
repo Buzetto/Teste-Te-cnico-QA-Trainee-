@@ -2,7 +2,16 @@
 
 Este repositório contém a automação de testes de ponta a ponta (E2E) para a funcionalidade de **Login** do **Portal RDV**, desenvolvida utilizando o framework **Cypress** com **JavaScript**.
 
-O objetivo deste projeto é garantir a estabilidade e a segurança do fluxo de autenticação, validando cenários de sucesso (Caminho Feliz), tratamento de erros e resiliência da interface.
+O objetivo do projeto é validar o processo de autenticação da aplicação, garantindo o correto funcionamento dos cenários positivos e negativos, incluindo login com credenciais válidas, senha incorreta e validação de campos obrigatórios.
+
+---
+
+## Tecnologias utilizadas
+
+- Cypress como framework de automação E2E
+- JavaScript como linguagem utilizada nos testes
+- Node.js para gerenciamento de dependências
+- Git e GitHub para versionamento de código
 
 ---
 
